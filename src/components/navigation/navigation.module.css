@@ -1,0 +1,22 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: white;
+  transition: all 300ms;
+
+  &:hover {
+    transform: translateX(0.5rem);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &:global(.active) {
+    transform: translateX(0.5rem);
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}

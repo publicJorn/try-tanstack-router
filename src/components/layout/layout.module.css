@@ -1,0 +1,16 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(300px, 30vw) auto;
+  gap: 2rem;
+  min-height: 100svh;
+}
+
+.navigation {
+  padding-block: 1rem;
+  background-color: steelblue;
+  color: white;
+}
+
+.content {
+  padding-block: 1rem;
+}
