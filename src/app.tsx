@@ -8,7 +8,7 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Layout } from "./components/layout/layout";
 import { Home } from "./pages/home/home";
 import { About } from "./pages/about/about";
-import { peopleRoute } from "./pages/people/people-routes";
+import { peopleRouter } from "./pages/people/people-routes";
 
 export const rootRoute = createRootRoute({
   component: () => (
@@ -26,12 +26,12 @@ const homeRoute = createRoute({
 });
 
 const aboutRoute = createRoute({
-  path: "/about",
+  path: "about",
   getParentRoute: () => rootRoute,
   component: About,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, aboutRoute, peopleRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, aboutRoute, peopleRouter]);
 const router = createRouter({ routeTree });
 
 declare module "@tanstack/react-router" {

@@ -1,26 +1,23 @@
 import { createRoute } from "@tanstack/react-router";
-
+import { ExtraLayout } from "@/components/layout/extra-layout";
 import { rootRoute } from "@/app";
 import { People } from "./people";
 import { Person } from "./person";
 
-const peopleRoute = createRoute({
+export const peopleRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "people",
-});
-
-const peopleIndexRoute = createRoute({
-  getParentRoute: () => peopleRoute,
-  path: "/",
   component: People,
 });
 
 const personRoute = createRoute({
-  getParentRoute: () => peopleIndexRoute,
+  getParentRoute: () => peopleRoute,
   path: "$name",
-  component: Person,
+  component: () => (
+    <ExtraLayout>
+      <Person />
+    </ExtraLayout>
+  ),
 });
 
-peopleRoute.addChildren([peopleIndexRoute, personRoute]);
-
-export { peopleRoute };
+export const peopleRouter = peopleRoute.addChildren([personRoute]);
