@@ -1,9 +1,16 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import { createLazyRoute, Link, Outlet } from "@tanstack/react-router";
+import { PeopleNav } from "./people-nav";
+
+export const LazyPeople = createLazyRoute("/people")({
+  component: People,
+});
 
 export function People() {
   return (
     <>
       <h1>People</h1>
+      <PeopleNav />
+      <hr />
       <p>Choose a person!</p>
       <ul>
         <li>
@@ -17,7 +24,6 @@ export function People() {
           </Link>
         </li>
       </ul>
-      <hr />
       <Outlet />
     </>
   );

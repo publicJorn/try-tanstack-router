@@ -1,17 +1,35 @@
 import { createRoute } from "@tanstack/react-router";
 import { ExtraLayout } from "@/components/layout/extra-layout";
 import { rootRoute } from "@/app";
-import { People } from "./people";
+import { AboutPeople } from "./about-people";
+// import { People } from "./people";
 import { Person } from "./person";
 
-export const peopleRoute = createRoute({
+// export const peopleRoute = createRoute({
+//   getParentRoute: () => rootRoute,
+//   path: "people",
+// });
+
+// // has Outlet
+// const peopleIndex = createRoute({
+//   getParentRoute: () => peopleRoute,
+//   path: "/",
+//   component: People,
+// });
+
+const peopleRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "people",
-  component: People,
+}).lazy(() => import("./people").then((c) => c.LazyPeople));
+
+const about = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "people/about",
+  component: AboutPeople,
 });
 
 const personRoute = createRoute({
-  getParentRoute: () => peopleRoute,
+  getParentRoute: () => peopleRoute, // using Outlet
   path: "$name",
   component: () => (
     <ExtraLayout>
@@ -20,4 +38,9 @@ const personRoute = createRoute({
   ),
 });
 
-export const peopleRouter = peopleRoute.addChildren([personRoute]);
+export const peopleRouter = peopleRoute.addChildren([
+  // peopleIndex,
+  // peopleIndex.addChildren([personRoute]),
+  about,
+  personRoute,
+]);
