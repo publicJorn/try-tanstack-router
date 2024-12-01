@@ -1,6 +1,6 @@
 import { createRoute } from "@tanstack/react-router";
 import { ExtraLayout } from "@/components/layout/extra-layout";
-import { rootRoute } from "@/app";
+import { rootRoute } from "@/app-code";
 import { AboutPeople } from "./about-people";
 // import { People } from "./people";
 import { Person } from "./person";

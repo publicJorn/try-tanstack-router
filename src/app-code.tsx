@@ -34,11 +34,12 @@ const aboutRoute = createRoute({
 const routeTree = rootRoute.addChildren([homeRoute, aboutRoute, peopleRouter]);
 const router = createRouter({ routeTree });
 
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
-}
+// Comment this when including app-file from main.tsx
+// declare module "@tanstack/react-router" {
+//   interface Register {
+//     router: typeof router;
+//   }
+// }
 
 export function App() {
   return <RouterProvider router={router} />;

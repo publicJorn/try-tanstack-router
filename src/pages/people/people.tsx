@@ -1,9 +1,9 @@
-import { createLazyRoute, Link, Outlet } from "@tanstack/react-router";
+import { /*createLazyRoute,*/ Link, Outlet } from "@tanstack/react-router";
 import { PeopleNav } from "./people-nav";
 
-export const LazyPeople = createLazyRoute("/people")({
-  component: People,
-});
+// export const LazyPeople = createLazyRoute("/people")({
+//   component: People,
+// });
 
 export function People() {
   return (
