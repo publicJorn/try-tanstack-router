@@ -8,22 +8,27 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as PeopleIndexImport } from './routes/people/index'
 import { Route as PeopleAboutImport } from './routes/people/about'
 import { Route as PeopleNameImport } from './routes/people/$name'
 
+// Create Virtual Routes
+
+const AboutLazyImport = createFileRoute('/about')()
+
 // Create/Update Routes
 
-const AboutRoute = AboutImport.update({
+const AboutLazyRoute = AboutLazyImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -64,7 +69,7 @@ declare module '@tanstack/react-router' {
       id: '/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+      preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
     '/people/$name': {
@@ -95,7 +100,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutLazyRoute
   '/people/$name': typeof PeopleNameRoute
   '/people/about': typeof PeopleAboutRoute
   '/people': typeof PeopleIndexRoute
@@ -103,7 +108,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutLazyRoute
   '/people/$name': typeof PeopleNameRoute
   '/people/about': typeof PeopleAboutRoute
   '/people': typeof PeopleIndexRoute
@@ -112,7 +117,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutLazyRoute
   '/people/$name': typeof PeopleNameRoute
   '/people/about': typeof PeopleAboutRoute
   '/people/': typeof PeopleIndexRoute
@@ -135,7 +140,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  AboutLazyRoute: typeof AboutLazyRoute
   PeopleNameRoute: typeof PeopleNameRoute
   PeopleAboutRoute: typeof PeopleAboutRoute
   PeopleIndexRoute: typeof PeopleIndexRoute
@@ -143,7 +148,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  AboutLazyRoute: AboutLazyRoute,
   PeopleNameRoute: PeopleNameRoute,
   PeopleAboutRoute: PeopleAboutRoute,
   PeopleIndexRoute: PeopleIndexRoute,
@@ -170,7 +175,7 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/about": {
-      "filePath": "about.tsx"
+      "filePath": "about.lazy.tsx"
     },
     "/people/$name": {
       "filePath": "people/$name.tsx"
